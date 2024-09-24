@@ -14,6 +14,6 @@ def mask_account_card(info_and_number: str) -> str:
 
 
 def get_date(user_data: str) -> str:
-    """ Функция, которая выводит дату"""
+    """Функция, которая выводит дату"""
     user_data_split = user_data[:10].split("-")
     return ".".join(user_data_split[::-1])
