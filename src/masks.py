@@ -22,4 +22,4 @@ def get_mask_account(account_number: str) -> str:
         new_account_number += "**"
         new_account_number += account_number[-4:]
         return new_account_number
-    raise ValueError('Неправильный номер карты')
+    raise ValueError('Неправильный номер счета')
