@@ -2,7 +2,7 @@ from typing import Iterator
 
 
 def filter_by_currency(list_dict: list, currency: str = "USD") -> Iterator:
-    """Функция должна возвращать итератор, который поочередно выдает транзакции, где валюта операции соответствует заданной."""
+    """Функция должна возвращать итератор, который поочередно выдает транзакции."""
     if len(list_dict) > 0:
         for dic in list_dict:
             if dic.get("operationAmount").get("currency").get("code") == currency:
@@ -24,7 +24,7 @@ def transaction_descriptions(list_dict: list) -> Iterator:
 def card_number_generator(start: int, stop: int) -> Iterator:
     """Функция, которая выдает номера банковских карт в формате XXXX XXXX XXXX XXXX"""
     for number in range(start, stop):
-        number = str(number)
-        while len(number) < 16:
-            number = "0" + number
-        yield f"{number[:4]} {number[4:8]} {number[8:12]} {number[12:]}"
+        all_number = str(number)
+        while len(all_number) < 16:
+            all_number = "0" + all_number
+        yield f"{all_number[:4]} {all_number[4:8]} {all_number[8:12]} {all_number[12:]}"
