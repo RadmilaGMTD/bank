@@ -155,4 +155,3 @@ def test_sort_by_date_true_same_dates() -> None:
 )
 def test_sort_by_date_invalid_date(list_dict: list, parameter: bool, expected: list) -> None:
     assert sort_by_date(list_dict, parameter) == expected
-
