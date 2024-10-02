@@ -26,3 +26,4 @@ def get_date(user_data: str) -> str:
             return result
         raise ValueError("Некорректный ввод")
     raise ValueError ("Пустая строка")
+

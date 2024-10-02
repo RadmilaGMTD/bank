@@ -4,6 +4,7 @@ from src.generators import filter_by_currency, transaction_descriptions, card_nu
 
 print(mask_account_card("Maestro 1596837868705199"))
 print(get_date("2024-03-11T02:26:18.671407"))
+print(get_date("T02:26:18.671407"))
 print(
     filter_by_state(
         [
