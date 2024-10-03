@@ -24,4 +24,5 @@ def get_date(user_data: str) -> str:
         result = ".".join(user_data_split[::-1])
         if "0" < result[:2] <= "31" and "0" < result[3:5] <= "12":
             return result
-    raise ValueError("Некорректный ввод")
+        raise ValueError("Некорректный ввод")
+    raise ValueError("Пустая строка")

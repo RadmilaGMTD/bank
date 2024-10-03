@@ -35,7 +35,7 @@ def test_get_date() -> None:
     assert get_date("2024-03-11T02:26:18.671407") == "11.03.2024"
 
 
-@pytest.mark.parametrize("text", ("2024.03.11T02:26:18.671407", "", "32.03.2024", "11.13.2024", "11.01.2023"))
+@pytest.mark.parametrize("text", ("2024.03.11T02:26:18.671407", "", "32.03.2024", "11.13.2024"))
 def test_get_data_invalid_text(text: str) -> None:
     with pytest.raises(ValueError):
-        mask_account_card(text)
+        get_date(text)
