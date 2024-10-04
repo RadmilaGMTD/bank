@@ -1,7 +1,1 @@
-my_function ok
-my_function start: 1728006695.9963782
-my_function end: 1728006695.9963782
-my_function result: 3my_function ok
-my_function start: 1728006972.8138175
-my_function end: 1728006972.8138175
-my_function result: 3
+my_function error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: ((1, '5'), {})my_function error: unsupported operand type(s) for +: 'int' and 'str'. Inputs: ((1, '5'), {})
