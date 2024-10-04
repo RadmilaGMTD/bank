@@ -1,7 +1,7 @@
+from src.decorators import log
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
-from src.decorators import  log
 
 print(mask_account_card("Maestro 1596837868705199"))
 print(get_date("2024-03-11T02:26:18.671407"))
