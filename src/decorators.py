@@ -2,7 +2,8 @@ from functools import wraps
 from typing import Any
 
 
-def log(filename_: str) -> Any:
+def log(filename_) -> Any:
+    """Декоратор, который выводит логи в консоль или в файл"""
     def decorator(func: Any) -> Any:
         @wraps(func)
         def wrapper(*args: int, **kwargs: int) -> Any:
@@ -28,9 +29,7 @@ def log(filename_: str) -> Any:
     return decorator
 
 
-filename_ = "mylog.txt"
-
-
+filename_= ''
 @log(filename_)
 def my_function(x: int, y: int) -> int:
     """Функция, которая складывает числа"""
