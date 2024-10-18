@@ -16,4 +16,13 @@ result: 6
 end my_functionmy_function ok
 start my_function
 result: 6
+end my_functionmy_function ok
+start my_function
+result: 6
+end my_functionmy_function ok
+start my_function
+result: 6
+end my_functionmy_function ok
+start my_function
+result: 6
 end my_function
