@@ -4,7 +4,7 @@ from typing import Any
 import logging
 
 logger = logging.getLogger('utils')
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler('logs/utils.log','w',encoding='utf-8')
 file_formate = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
 file_handler.setFormatter(file_formate)
