@@ -1,5 +1,7 @@
+from src.external_api import conversion
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.processing import filter_by_state, sort_by_date
+from src.utils import file_read
 from src.widget import get_date, mask_account_card
 
 print(mask_account_card("Maestro 1596837868705199"))
@@ -109,3 +111,12 @@ for i in range(5):
 gen = card_number_generator(1, 5)
 for card_number in card_number_generator(1, 5):
     print(next(gen))
+
+
+fun = file_read()
+print(fun)
+
+
+list_transactions = file_read()
+func = conversion(list_transactions)
+print(func)
