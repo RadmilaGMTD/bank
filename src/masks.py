@@ -1,8 +1,12 @@
 import logging
+import os
 
 logger = logging.getLogger('masks')
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler('logs/masks.log','w',encoding='utf-8')
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))  # поднимаемся на один уровень выше
+log_directory = os.path.join(project_root, "logs")  # Папка logs в корне проекта
+log_file_path = os.path.join(log_directory, 'masks.log')
+file_handler = logging.FileHandler(log_file_path,'w',encoding='utf-8')
 file_formate = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
 file_handler.setFormatter(file_formate)
 logger.addHandler(file_handler)

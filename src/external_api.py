@@ -3,6 +3,7 @@ import os
 
 import requests
 from dotenv import load_dotenv
+from src.utils import file_read
 
 
 def conversion(list_transactions: list) -> float:
