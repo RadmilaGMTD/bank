@@ -32,6 +32,3 @@ def file_read(file: str) -> list:
     except (FileNotFoundError, JSONDecodeError):
         logger.error("Файл не найден")
         return []
-    except JSONDecodeError:
-        logger.error("Ошибка декодирования JSON; файл может быть поврежден или содержать некорректные данные.")
-    return []  # Добавила, чтобы mypy не показывал ошибку

@@ -7,7 +7,8 @@ import pandas as pd
 
 from src.read_files import read_csv, read_excel
 
-test_file_path_csv = "../data/transactions.csv"
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+test_file_path_csv = os.path.join(project_root, "data", "test_transactions.csv")
 
 
 def test_read_csv_valid() -> None:
@@ -24,17 +25,17 @@ def test_read_csv_valid() -> None:
     os.remove(test_file_path_csv)
 
 
-test_file_path_xlsx = "../data/transactions.xlsx"
+test_file_path_excel = os.path.join(project_root, "data", "test_transactions_excel.xlsx")
 
 
 def test_read_xlsx_valid() -> None:
     """Тест на проверку работы функции с excel файлом"""
     rows = [{"id": 650703.0, "state": "EXECUTED", "date": "2023-09-05T11:30:32Z"}]
     df = pd.DataFrame(rows)
-    df.to_excel(test_file_path_xlsx, index=False)
-    result = read_excel(test_file_path_xlsx)
+    df.to_excel(test_file_path_excel, index=False)
+    result = read_excel(test_file_path_excel)
     assert result == [{"id": 650703.0, "state": "EXECUTED", "date": "2023-09-05T11:30:32Z"}]
-    os.remove(test_file_path_xlsx)
+    os.remove(test_file_path_excel)
 
 
 @patch("builtins.open", new_callable=mock_open, read_data="id;state;date\n650703.0;EXECUTED;2023-09-05T11:30:32Z")
