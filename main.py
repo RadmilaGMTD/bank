@@ -1,10 +1,11 @@
+import os
+
 from src.external_api import conversion
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.processing import filter_by_state, sort_by_date
+from src.read_files import read_csv, read_excel
 from src.utils import file_read
 from src.widget import get_date, mask_account_card
-from src.read_files import read_csv, read_excel
-import os
 
 print(mask_account_card("Maestro 1596837868705199"))
 print(get_date("2024-03-11T02:26:18.671407"))
@@ -115,7 +116,7 @@ for card_number in card_number_generator(1, 5):
     print(next(gen))
 
 
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 file = os.path.join(project_root, "bank", "data", "operations.json")
 
 fun = file_read(file)
