@@ -48,3 +48,10 @@ def test_empty_file(mock_file: Any) -> None:
     """Если файл не задан, пустой файл (мок)"""
     transactions = file_read("data/operations.json")
     assert transactions == []
+
+
+@patch("builtins.open", new_callable=mock_open, read_data='123')
+def test_empty_file_invalid(mock_file: Any) -> None:
+    """Если заданы некорректные данные (мок)"""
+    transactions = file_read("data/operations.json")
+    assert transactions == []

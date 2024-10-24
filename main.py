@@ -1,6 +1,9 @@
+import os
+
 from src.external_api import conversion
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.processing import filter_by_state, sort_by_date
+from src.read_files import read_csv, read_excel
 from src.utils import file_read
 from src.widget import get_date, mask_account_card
 
@@ -113,10 +116,21 @@ for card_number in card_number_generator(1, 5):
     print(next(gen))
 
 
-fun = file_read()
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+file = os.path.join(project_root, "bank", "data", "operations.json")
+
+fun = file_read(file)
 print(fun)
 
 
-list_transactions = file_read()
+list_transactions = file_read(file)
 func = conversion(list_transactions)
 print(func)
+
+
+file_csv = os.path.join(project_root, "bank", "data", "transactions.csv")
+print(read_csv(file_csv))
+
+
+file_excel = os.path.join(project_root, "bank", "data", "transactions_excel.xlsx")
+print(read_excel(file_excel))
