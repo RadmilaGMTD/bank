@@ -3,7 +3,7 @@ from collections import Counter
 
 
 def filter_transaction(list_dict: list, description_value: str) -> list:
-    result = [transaction for transaction in list_dict if re.match(description_value, transaction['description'])]
+    result = [description for description in list_dict if re.match(description_value, description['description'])]
     return result
 
 
