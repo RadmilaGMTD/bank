@@ -3,7 +3,6 @@ import logging
 import os
 from json import JSONDecodeError
 
-
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))

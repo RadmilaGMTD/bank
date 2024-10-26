@@ -27,8 +27,7 @@ def test_mask_account_card_different(number: str, expected: str) -> None:
     "number", ("Maestro 159683786", "Счет 7000792289606361000000", "", "1234567891234567", "qwertyuiiiqwerty")
 )
 def test_test_mask_account_card_invalid_number(number: str) -> None:
-    with pytest.raises(ValueError):
-        mask_account_card(number)
+    assert mask_account_card(number) == ""
 
 
 def test_get_date() -> None:

@@ -1,13 +1,15 @@
 import os
+# from src.read_files import read_csv, read_excel
+# from src.utils import file_read
+# from src.widget import get_date, mask_account_card
+# import re
+from typing import Iterator
 
-from src.external_api import conversion
-from src.filter_count import filter_transaction
-from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
-from src.processing import filter_by_state, sort_by_date
-from src.read_files import read_csv, read_excel
-from src.utils import file_read
-from src.widget import get_date, mask_account_card
-import re
+# from src.external_api import conversion
+# from src.filter_count import filter_transaction
+# from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
+from src.processing import filter_by_state
+from src.users import filter_currency, result, user_file, user_filter, user_sort
 
 # print(mask_account_card("Maestro 1596837868705199"))
 # print(get_date("2024-03-11T02:26:18.671407"))
@@ -142,75 +144,46 @@ file_json = os.path.join(project_root, "bank", "data", "operations.json")
 file_csv = os.path.join(project_root, "bank", "data", "transactions.csv")
 file_excel = os.path.join(project_root, "bank", "data", "transactions_excel.xlsx")
 
-def main():
-    user_input = input('Привет! Добро пожаловать в программу работы с банковскими транзакциями.\nВыберите необходимый пункт меню:\n1. Получить информацию о транзакциях из JSON-файла\n2. Получить информацию о транзакциях из CSV-файла\n3. Получить информацию о транзакциях из XLSX-файла\nВыберите формат файла: ')
-    def user_file(user_input_file, json, csv, excel):
-        if user_input_file == '1':
-            print('Для обработки выбран JSON-файл.')
-            return file_read(json)
-        elif user_input_file == '2':
-            print('Для обработки выбран CSV-файл.')
-            return read_csv(csv)
-        elif user_input_file == '3':
-            print('Для обработки выбран XLSX-файл.')
-            return read_excel(excel)
+
+def main() -> Iterator:
+    """Функция, которая отвечает за основную логику проекта с пользователем"""
+    user_input = input(
+        "Привет! Добро пожаловать в программу работы с банковскими транзакциями.\nВыберите необходимый пункт меню:\n1. Получить информацию о транзакциях из JSON-файла\n2. Получить информацию о транзакциях из CSV-файла\n3. Получить информацию о транзакциях из XLSX-файла\nВыберите формат файла: "
+    )
     result_user_file = user_file(user_input, file_json, file_csv, file_excel)
     while True:
-        user_input_2 = input('Введите статус, по которому необходимо выполнить фильтрацию.\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING: ')
-        if user_input_2 == 'EXECUTED' or user_input_2 == 'CANCELED' or user_input_2 == 'PENDING':
+        user_input_2 = (
+            input(
+                "Введите статус, по которому необходимо выполнить фильтрацию.\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING: "
+            )
+            .strip()
+            .upper()
+        )
+        if user_input_2 in ("EXECUTED", "CANCELED", "PENDING"):
             break
         else:
-            print(f'Статус операции {user_input_2} недоступен.')
+            print(f"Статус операции {user_input_2} недоступен.")
     result_filter_by_state = filter_by_state(result_user_file, user_input_2)
-    print(f'Операции отфильтрованы по статусу {user_input_2}')
-    user_input_3 = input('Отсортировать операции по дате? Да/Нет: ')
-    def user_sort(list_dict, user_answer):
-        if user_answer == 'Да':
-            user_input_4 = input('Отсортировать по возрастанию или по убыванию?: ')
-            if user_input_4 == 'по возрастанию':
-                return sort_by_date(list_dict, False)
-            elif user_input_4 == 'по убыванию':
-                return sort_by_date(list_dict, True)
-        elif user_answer == 'Нет':
-            return list_dict
+    if not result_filter_by_state:
+        print(f"Транзакции по статусу {user_input_2} не найдены")
+        return
+    print(f"Операции отфильтрованы по статусу {user_input_2}")
+    user_input_3 = input("Отсортировать операции по дате? Да/Нет: ").strip().lower()
     result_user_sort = user_sort(result_filter_by_state, user_input_3)
-    print(result_user_sort)
-    user_input_5 = input('Выводить только рублевые транзакции? Да/Нет: ')
-    def filter_currency(user_answer, result_list_sort_by_date: list, currency_value: str = 'RUB') -> list:
-        if user_answer == 'Да':
-            try:
-                result = [currency for currency in result_list_sort_by_date if
-                            re.match(currency_value, currency.get("operationAmount").get("currency").get("code") or currency.get('currency_code'))]
-                return result
-            except Exception:
-                return []
-        elif user_answer == 'Нет':
-            return result_list_sort_by_date
-    result_filter_currency = filter_currency(user_input_5, result_user_sort, 'RUB')
+    user_input_5 = input("Выводить только рублевые транзакции? Да/Нет: ").strip().lower()
+    result_filter_currency = filter_currency(user_input_5, result_user_sort, "RUB")
     if not result_filter_currency:
-        return "Рублевые транзакции не найдены"
-    user_input_6 = input(
-        'Отфильтровать список транзакций по определенному слову в описании? Да/Нет: ')
-    def user_filter(user_answer, list_dict):
-        if user_answer == 'Да':
-            user_input_7 = input('Введите описание операции: ')
-            result_filter_transactions = filter_transaction(list_dict, user_input_7)
-            print('Распечатываю итоговый список транзакций')
-            return result_filter_transactions
-        elif user_input_6 == 'Нет':
-            return list_dict
+        print("Рублевые транзакции не найдены")
+        return
+    user_input_6 = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет: ").strip().lower()
     result_user_filter = user_filter(user_input_6, result_filter_currency)
-    print(result_user_filter)
-    def result(result_list):
-        for i in result_list:
-            data_ = get_date(i['date'])
-            category = i.get('description')
-            from_ = mask_account_card(i.get('from', ''))
-            if not from_:
-                from_ = ''
-            to_ = mask_account_card(i.get('to', ''))
-            amount = i.get('operationAmount').get('amount')
-        return f'Всего банковских операций в выборке: {len(result_list)} \n{data_} {category} \n{from_} -> {to_} \nСумма: {amount}'
-    return result(result_user_filter)
+    result_function = result(result_user_filter, user_input)
+    if len(result_user_filter) == 0:
+        print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
+        return
+    print(f"Всего банковских операций в выборке: {len(result_user_filter)}")
+    for d in range((len(result_user_filter) - 1)):
+        print(next(result_function))
 
-print(main())
+
+main()
