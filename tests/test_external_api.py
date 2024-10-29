@@ -1,10 +1,7 @@
-import json
-import os
+
 from unittest.mock import Mock, patch
 
 import pytest
-import requests
-from dotenv import load_dotenv
 
 from src.external_api import conversion
 from src.utils import file_read
@@ -55,7 +52,7 @@ def test_conversion_valid_rub(mock_file_read: Mock, mock_get: Mock) -> None:
 
 @patch("src.external_api.requests.get")
 @patch("src.utils.file_read")
-def test_conversion_invalid(mock_file_read: Mock, mock_get: Mock) -> None:
+def test_conversion_invalid_2(mock_file_read: Mock, mock_get: Mock) -> None:
     """Корректная работа функции (мок) (на входе usd)"""
     mock_get.return_value.status_code = 200
     mock_get.return_value.json.return_value = {"result": 3724.305775}

@@ -3,7 +3,9 @@ from src.masks import get_mask_account, get_mask_card_number
 
 def mask_account_card(info_and_number: str) -> str:
     """Функция, которая маскирует номер карты или счёта"""
-    if len(info_and_number) > 0:
+    try:
+        if not info_and_number:
+            raise ValueError("Неправильный номер карты или счета")
         if info_and_number.isdigit() or info_and_number.isalpha():
             raise ValueError("Неправильный номер карты или счета")
         info_and_number_split = info_and_number.split()
@@ -13,8 +15,9 @@ def mask_account_card(info_and_number: str) -> str:
                     return get_mask_card_number(info_and_number_i)
                 elif len(info_and_number_i) == 20:
                     return get_mask_account(info_and_number_i)
-                raise ValueError("Неправильный номер карты или счета")
-    raise ValueError("Неправильный номер карты или счета")
+                return ""
+    except Exception:
+        return ""
 
 
 def get_date(user_data: str) -> str:
